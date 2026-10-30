@@ -1,0 +1,4 @@
+-r requirements.txt
+# Optional: install only after obtaining the original trained model.
+# Use Python 3.11 for this TensorFlow version.
+tensorflow-cpu==2.15.1

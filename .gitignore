@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+assets/data/
+assets/captures/
+# Add the trained model separately when it is ready.

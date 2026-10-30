@@ -1,0 +1,4 @@
+Flask==3.0.3
+qiskit==1.2.4
+qiskit-aer==0.15.1
+gunicorn==23.0.0
