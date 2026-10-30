@@ -1,6 +1,5 @@
 const MOVES = {
-  rock: {label:'Rock', icon:'✊'}, paper:{label:'Paper',icon:'✋'}, scissors:{label:'Scissors',icon:'✌️'},
-  lizard:{label:'Lizard',icon:'🤏'}, spock:{label:'Spock',icon:'🖖'}
+  rock: {label:'Búa', icon:'✊'}, paper:{label:'Bao',icon:'✋'}, scissors:{label:'Kéo',icon:'✌️'}
 };
 const $ = (id) => document.getElementById(id);
 let playerScore = 0, computerScore = 0, rounds = 0, busy = false, stream = null;
@@ -9,7 +8,7 @@ const buttons = [...document.querySelectorAll('.move-btn')];
 function setBusy(value) { busy = value; buttons.forEach(button => button.disabled = value); }
 function showMove(element, move, waiting=false) {
   if (waiting) { element.innerHTML = '<span>…</span><small>ĐANG TÍNH...</small>'; return; }
-  if (!move || !MOVES[move]) { element.innerHTML = '<span>❔</span><small>CHƯA CÓ LỰA CHỌN</small>'; return; }
+  if (!move || !MOVES[move]) { element.innerHTML = '<span>❔</span><small>CHƯA CHỌN</small>'; return; }
   element.innerHTML = `<span>${MOVES[move].icon}</span><small>${MOVES[move].label.toUpperCase()}</small>`;
 }
 function showResult(outcome, computer) {

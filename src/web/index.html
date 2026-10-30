@@ -2,36 +2,34 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#101827"><meta name="description" content="Rock Paper Scissors Lizard Spock — browser demo with webcam and Qiskit-powered moves.">
-  <title>Quantum Hand Duel — RPSLS</title><link rel="stylesheet" href="/style.css">
+  <meta name="theme-color" content="#101827"><meta name="description" content="Oẳn tù xì Búa Bao Kéo — demo trên trình duyệt với webcam và Qiskit.">
+  <title>Oẳn Tù Xì — Búa Bao Kéo</title><link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
   <main class="shell">
-    <header class="topbar"><a class="brand" href="/" aria-label="Quantum Hand Duel"><span class="brand-mark">Q</span><span>QUANTUM <b>HAND DUEL</b></span></a><span class="pill" id="connection"><i></i> Đang kiểm tra máy chủ</span></header>
-    <section class="hero"><p class="eyebrow">A LITTLE GAME. A QUANTUM TWIST.</p><h1>Rock · Paper · Scissors<br><em>· Lizard · Spock</em></h1><p class="sub">Đọc vị đối thủ? Không dễ đâu. Máy chọn nước đi bằng bộ sinh số ngẫu nhiên Qiskit.</p></section>
+    <header class="topbar"><a class="brand" href="/" aria-label="Quantum Hand Duel"><span class="brand-mark">Q</span><span>OẲN TÙ <b>XÌ</b></span></a><span class="pill" id="connection"><i></i> Đang kiểm tra máy chủ</span></header>
+    <section class="hero"><p class="eyebrow">OẲN TÙ XÌ · BÚA BAO KÉO</p><h1>Búa · Bao · Kéo</h1><p class="sub">Chọn một nước đi. Máy sẽ chọn ngẫu nhiên bằng bộ mô phỏng Qiskit.</p></section>
     <section class="scoreboard" aria-label="Tỉ số">
       <div class="score-card player-card"><span class="score-label">BẠN</span><strong id="playerScore">0</strong><small>PLAYER</small></div>
       <div class="versus">VS</div>
-      <div class="score-card cpu-card"><span class="score-label">MÁY</span><strong id="computerScore">0</strong><small>QUANTUM CPU</small></div>
+      <div class="score-card cpu-card"><span class="score-label">MÁY</span><strong id="computerScore">0</strong><small>MÁY</small></div>
     </section>
     <section class="arena">
-      <article class="fighter"><div class="fighter-head"><span>01 / YOUR MOVE</span><span class="live-dot">● READY</span></div><div class="move-display" id="playerDisplay"><span>✊</span><small>CHỜ BẠN CHỌN</small></div><p class="fighter-caption">Chọn một cử chỉ bên dưới hoặc thử bật webcam.</p></article>
+      <article class="fighter"><div class="fighter-head"><span>01 / YOUR MOVE</span><span class="live-dot">● READY</span></div><div class="move-display" id="playerDisplay"><span>✊</span><small>CHỜ BẠN CHỌN</small></div><p class="fighter-caption">Chọn Búa, Bao hoặc Kéo bên dưới.</p></article>
       <div class="arena-divider"><span>✦</span></div>
-      <article class="fighter"><div class="fighter-head"><span>02 / OPPONENT</span><span class="cpu-tag">QISKIT</span></div><div class="move-display cpu-display" id="computerDisplay"><span>❔</span><small>ĐANG CHỜ...</small></div><p class="fighter-caption">Không có chiến thuật cố định. Mỗi lượt là một lần lấy số mới.</p></article>
+      <article class="fighter"><div class="fighter-head"><span>02 / OPPONENT</span><span class="cpu-tag">QISKIT</span></div><div class="move-display cpu-display" id="computerDisplay"><span>❔</span><small>ĐANG CHỜ...</small></div><p class="fighter-caption">Máy chọn ngẫu nhiên một trong ba nước đi.</p></article>
     </section>
     <section class="result" aria-live="polite"><div class="result-line" id="resultTitle">Sẵn sàng chưa?</div><p id="resultDetail">Chọn nước đi đầu tiên để bắt đầu trận đấu.</p></section>
-    <section class="choose"><div class="section-heading"><div><p class="eyebrow">MAKE YOUR CHOICE</p><h2>Chọn cử chỉ</h2></div><span class="round-count" id="roundCount">ROUND 00</span></div>
+    <section class="choose"><div class="section-heading"><div><p class="eyebrow">CHỌN NƯỚC ĐI</p><h2>Chọn cử chỉ</h2></div><span class="round-count" id="roundCount">ROUND 00</span></div>
       <div class="move-grid" id="moveGrid">
-        <button class="move-btn" data-move="rock"><span>✊</span><b>Rock</b><small>Búa</small></button>
-        <button class="move-btn" data-move="paper"><span>✋</span><b>Paper</b><small>Bao</small></button>
-        <button class="move-btn" data-move="scissors"><span>✌️</span><b>Scissors</b><small>Kéo</small></button>
-        <button class="move-btn" data-move="lizard"><span>🤏</span><b>Lizard</b><small>Thằn lằn</small></button>
-        <button class="move-btn" data-move="spock"><span>🖖</span><b>Spock</b><small>Spock</small></button>
+        <button class="move-btn" data-move="rock"><span>✊</span><b>Búa</b><small>Rock</small></button>
+        <button class="move-btn" data-move="paper"><span>✋</span><b>Bao</b><small>Paper</small></button>
+        <button class="move-btn" data-move="scissors"><span>✌️</span><b>Kéo</b><small>Scissors</small></button>
       </div>
     </section>
     <section class="webcam-panel"><div class="webcam-copy"><p class="eyebrow">OPTIONAL CAMERA</p><h2>Thử với webcam</h2><p>Camera chỉ hiển thị trên trình duyệt. Bản ZIP hiện chưa có model huấn luyện, nên nhận diện tự động sẽ được bật sau khi bổ sung model TensorFlow.</p><div class="camera-actions"><button class="btn btn-primary" id="cameraStart">Bật webcam</button><button class="btn btn-ghost" id="cameraStop" disabled>Tắt camera</button><button class="btn btn-ghost" id="cameraCapture" disabled>Chụp & nhận diện</button></div><p class="camera-note" id="cameraNote">Chưa bật camera.</p></div><div class="camera-frame"><video id="camera" autoplay muted playsinline></video><div class="camera-placeholder" id="cameraPlaceholder"><span>◎</span><small>CAMERA PREVIEW</small></div><canvas id="snapshot" hidden></canvas></div></section>
-    <footer><span>QUANTUM HAND DUEL <b>·</b> HACKATHON DEMO</span><button id="resetGame" class="reset">↻ Chơi lại</button></footer>
+    <footer><span>OẲN TÙ XÌ <b>·</b> BÚA BAO KÉO</span><button id="resetGame" class="reset">↻ Chơi lại</button></footer>
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.468.0/umd/lucide.min.js" defer></script>
 </body></html>

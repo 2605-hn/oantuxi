@@ -1,4 +1,4 @@
-"""Browser-hosted demo for Rock-Paper-Scissors-Lizard-Spock.
+"""Browser-hosted demo for classic Rock-Paper-Scissors.
 TensorFlow inference is enabled when assets/model/hand_gesture_classify_model.h5 exists.
 Qiskit Aer is used for the computer's move when installed; a secure system RNG is the fallback.
 """
@@ -16,33 +16,34 @@ app = Flask(__name__, static_folder=None)
 _model = None
 _model_error = None
 
-MOVES = ["rock", "paper", "scissors", "lizard", "spock"]
-# Original training notebook class order: lizard, none, paper, rock, scissors, spock.
-CLASS_TO_MOVE = {0: 3, 1: 5, 2: 1, 3: 0, 4: 2, 5: 4}
+MOVES = ["rock", "paper", "scissors"]
+# Original model classes: lizard, none, paper, rock, scissors, spock.
+# Only the three classic gestures are accepted by this version.
+CLASS_TO_MOVE = {2: 1, 3: 0, 4: 2}
 
 
 def quantum_move():
-    """Return 0..4 using a 3-qubit Qiskit Aer measurement with rejection sampling."""
+    """Return 0..2 using a 2-qubit Qiskit Aer measurement with rejection sampling."""
     try:
         from qiskit import QuantumCircuit, transpile
         from qiskit_aer import AerSimulator
 
         simulator = AerSimulator()
         for _ in range(8):
-            circuit = QuantumCircuit(3, 3)
-            circuit.h([0, 1, 2])
-            circuit.measure([0, 1, 2], [0, 1, 2])
+            circuit = QuantumCircuit(2, 2)
+            circuit.h([0, 1])
+            circuit.measure([0, 1], [0, 1])
             compiled = transpile(circuit, simulator)
             result = simulator.run(compiled, shots=1).result()
             bits = next(iter(result.get_counts().keys())).replace(" ", "")
             value = int(bits, 2)
-            if value < 5:
+            if value < 3:
                 return value, "Qiskit Aer simulator"
-        # Mathematically negligible fallback if all sampled values are 5..7.
-        return secrets.randbelow(5), "system RNG fallback"
+        # Mathematically negligible fallback if all sampled values are 3.
+        return secrets.randbelow(3), "system RNG fallback"
     except Exception as exc:
         app.logger.warning("Qiskit unavailable; using system RNG: %s", exc)
-        return secrets.randbelow(5), "system RNG fallback (Qiskit unavailable)"
+        return secrets.randbelow(3), "system RNG fallback (Qiskit unavailable)"
 
 
 def get_model():
@@ -100,13 +101,11 @@ def play_round():
         return jsonify({"error": "Nước đi không hợp lệ."}), 400
     computer_index, rng_source = quantum_move()
     computer = MOVES[computer_index]
-    # Each move defeats the two moves listed beside it.
+    # Classic rules: rock beats scissors, paper beats rock, scissors beats paper.
     defeats = {
-        "rock": {"scissors", "lizard"},
-        "paper": {"rock", "spock"},
-        "scissors": {"paper", "lizard"},
-        "lizard": {"spock", "paper"},
-        "spock": {"scissors", "rock"},
+        "rock": {"scissors"},
+        "paper": {"rock"},
+        "scissors": {"paper"},
     }
     if player == computer:
         outcome = "tie"
@@ -136,7 +135,7 @@ def classify_image():
         class_id = int(np.argmax(predictions))
         confidence = float(np.max(predictions))
         move_index = CLASS_TO_MOVE.get(class_id)
-        if move_index is None or move_index == 5:
+        if move_index is None:
             return jsonify({"error": "Không nhận diện được cử chỉ. Hãy đưa bàn tay rõ hơn vào khung hình.", "confidence": confidence}), 422
         return jsonify({"move": MOVES[move_index], "confidence": confidence})
     except Exception as exc:

@@ -1,11 +1,11 @@
 # Quantum Hand Duel — Browser Demo
 
-A browser-hosted Rock–Paper–Scissors–Lizard–Spock demo based on the original Qiskit Hackathon IITR 2021 project.
+A browser-hosted classic Rock–Paper–Scissors (Búa–Bao–Kéo) demo based on the original Qiskit Hackathon IITR 2021 project.
 
 ## Demo features
 - Responsive browser UI; no Eel desktop window required.
 - Webcam preview using the browser camera API.
-- Five selectable gestures and first-to-five scoring.
+- Three selectable gestures (Búa, Bao, Kéo) and first-to-five scoring.
 - Flask backend and Qiskit Aer-based computer move generation.
 - Optional TensorFlow image classification endpoint when a trained model is supplied.
 
